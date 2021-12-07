@@ -1,0 +1,327 @@
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Audio } from 'expo-av';
+import CountDown from 'react-native-countdown-component';
+import moment from 'moment';
+
+export default function App() {
+  const [counter, setCounter] = React.useState(60);
+
+  // Third Attempts
+  React.useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
+  
+const questions = [
+    {
+      questionText: 'Which country held the 2016 Summer Olympics?',
+      answerOptions: [
+        { answerText: 'Japan', isCorrect: false },
+        { answerText: 'Congo', isCorrect: false },
+        { answerText: 'Germany', isCorrect: false },
+        { answerText: 'Brazil', isCorrect: true },
+      ],
+    },
+    {
+      questionText: 'Who was the only U.S. President to resign?',
+      answerOptions: [
+        { answerText: 'Richard Nixon', isCorrect: true },
+        { answerText: 'Joe Biden', isCorrect: false },
+        { answerText: 'Bill Clinton', isCorrect: false },
+        { answerText: 'Barack Obama', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'What Was the Largest Contiguous Empire in History?',
+      answerOptions: [
+        { answerText: 'Greek empire', isCorrect: false },
+        { answerText: 'Rome empire', isCorrect: false },
+        { answerText: 'Mongol empire', isCorrect: true },
+        { answerText: 'Inkas empire', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'When Was Russians “Red October” Revolution?',
+      answerOptions: [
+        { answerText: 'October 1, 1917', isCorrect: false },
+        { answerText: 'November 7, 1917', isCorrect: true },
+        { answerText: 'January 17, 1918', isCorrect: false },
+        { answerText: 'November 20, 1920', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'Who Invented the Automobile?',
+      answerOptions: [
+        { answerText: 'Albert Einsten', isCorrect: false },
+        { answerText: 'Alexander Winton', isCorrect: false },
+        { answerText: 'André Citroën', isCorrect: false },
+        { answerText: 'Karl Friedrich Benz', isCorrect: true },
+      ],
+    },
+    {
+      questionText: 'When Was the Declaration of Independence Signed?',
+      answerOptions: [
+        { answerText: 'July 4th 1776', isCorrect: true },
+        { answerText: 'July 10th 1780', isCorrect: false },
+        { answerText: 'July 21th 1778', isCorrect: false },
+        { answerText: 'July 15th 1781', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'Which famous greek scientist was the first one to propose that the eart was spherical?',
+      answerOptions: [
+        { answerText: 'Levenon', isCorrect: false },
+        { answerText: 'Pythagoras', isCorrect: true },
+        { answerText: 'Albert', isCorrect: false },
+        { answerText: 'Julian', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'Who was the first man to step on the moon?',
+      answerOptions: [
+        { answerText: 'Edgar D. Mitchell', isCorrect: false },
+        { answerText: 'Alan Bean', isCorrect: false },
+        { answerText: 'Edwin Aldrin', isCorrect: false },
+        { answerText: 'Neil Armstrong', isCorrect: true },
+      ],
+    },
+    {
+      questionText: 'In what country were the Olympic Games invented?',
+      answerOptions: [
+        { answerText: 'Rome', isCorrect: false },
+        { answerText: 'England', isCorrect: false },
+        { answerText: 'Greece', isCorrect: true },
+        { answerText: 'China', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'Who invented the telephone?',
+      answerOptions: [
+        { answerText: 'Alexander Graham', isCorrect: true },
+        { answerText: 'Isaac Newton', isCorrect: false },
+        { answerText: 'Leonhard Euler', isCorrect: false },
+        { answerText: 'Amedeo Avogadro', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'The Statue of Liberty came from which country to the United States?',
+      answerOptions: [
+        { answerText: 'Sweden', isCorrect: false },
+        { answerText: 'Italy', isCorrect: false },
+        { answerText: 'France', isCorrect: true },
+        { answerText: 'Finland', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'Which medieval queen was married to both Louis VII of France and Henry II of England?',
+      answerOptions: [
+        { answerText: 'Queen Wiltshire', isCorrect: false },
+        { answerText: 'Queen Chester', isCorrect: true },
+        { answerText: 'Queen Elizabeth I', isCorrect: false },
+        { answerText: 'Queen Elenor', isCorrect: true },
+      ],
+    },
+    {
+      questionText: 'Who discovered America',
+      answerOptions: [
+        { answerText: 'Vasco da Gama', isCorrect: false },
+        { answerText: 'Marco Polo', isCorrect: false },
+        { answerText: 'Christopher Columbus', isCorrect: true },
+        { answerText: 'John Cabot', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'Which African Country Named its Capital After a U.S. President?',
+      answerOptions: [
+        { answerText: 'Monrovia', isCorrect: true },
+        { answerText: 'Nigeria', isCorrect: false },
+        { answerText: 'Ghana', isCorrect: false },
+        { answerText: 'Tanzania', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'Which Pharaoh Led the Construction of the Pyramids of Giza?',
+      answerOptions: [
+        { answerText: 'Pharaoh Khafre', isCorrect: false },
+        { answerText: 'Pharaoh Menkaure', isCorrect: false },
+        { answerText: 'Pharaoh Khufu', isCorrect: true },
+        { answerText: 'Pharaoh Hatshepsut', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'What Was the Shortest War in History?',
+      answerOptions: [
+        { answerText: 'Russo-Georgian War', isCorrect: false },
+        { answerText: 'Anglo-Zanzibar War', isCorrect: true },
+        { answerText: 'Slovenian Independence War', isCorrect: false },
+        { answerText: 'Indo-Pakistani War', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'Where Was Adolf Hitler Born?',
+      answerOptions: [
+        { answerText: 'France', isCorrect: false },
+        { answerText: 'Germany', isCorrect: false },
+        { answerText: 'Austria', isCorrect: true },
+        { answerText: 'England', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'Who painted the mona lisa?',
+      answerOptions: [
+        { answerText: 'Leonardo da Vinci', isCorrect: true },
+        { answerText: 'Leonardo DiCaprio', isCorrect: false },
+        { answerText: 'Rafael Sanzio', isCorrect: false },
+        { answerText: 'Miguel Ángel', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'What was the initial reported cause of death for Elvis Presley that spread in the media?',
+      answerOptions: [
+        { answerText: 'Age', isCorrect: false },
+        { answerText: 'Suicide', isCorrect: false },
+        { answerText: 'Obesity problems', isCorrect: false },
+        { answerText: 'Heart attack', isCorrect: true },
+      ],
+    },
+    {
+      questionText: 'In USSR, What does the letter “R” sand for?',
+      answerOptions: [
+        { answerText: 'Realm people', isCorrect: false },
+        { answerText: 'Republicc', isCorrect: true },
+        { answerText: 'Racisim', isCorrect: false },
+        { answerText: 'Region', isCorrect: false },
+      ],
+    },
+  ];
+
+
+	const [currentQuestion, setCurrentQuestion] = useState(0);
+	const [showScore, setShowScore] = useState(false);
+	const [score, setScore] = useState(0);
+
+	const handleAnswerOptionClick = (isCorrect) => {
+		if (isCorrect) {
+			setScore(score + 1);
+		}
+
+		const nextQuestion = currentQuestion + 1;
+		if (nextQuestion < questions.length) {
+			setCurrentQuestion(nextQuestion);
+		} else {
+			setShowScore(true);
+		}
+	};
+
+return (
+    <View style={styles.body}>
+      <View style={styles.body2}>
+        <div className="app">
+          {showScore ? (
+            <View style={styles.finalScore}>
+              <div className="score-section">
+                You scored {score} out of {questions.length}
+              </div>
+            </View>
+          ) : (
+            <>
+              <div className="question-section">
+                <View style={styles.scoreSection}>
+                  <div className="question-count">
+                    <span>Question {currentQuestion + 1}</span>/
+                    {questions.length}
+                  </div>
+                </View>
+                <View style={styles.questionSection}>
+                  <div className="question-text">
+                    {questions[currentQuestion].questionText}
+                  </div>
+                </View>
+              </div>
+              <View style={styles.ansewerSection}>
+                <div className="answer-section">
+                  {questions[currentQuestion].answerOptions.map(
+                    (answerOption) => (
+                      <button
+                        onClick={() =>
+                          handleAnswerOptionClick(answerOption.isCorrect)
+                        }>
+                        {answerOption.answerText}
+                      </button>
+                    )
+                  )}
+                </div>
+              </View>
+            </>
+          )}
+        </div>
+      </View>
+        <View style={styles.countdownText}>
+        <div>Countdown: {counter}</div>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  body: {
+    backgroundColor: '#7cc6fe',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 370,
+  },
+  body2: {
+    marginLeft: 5,
+    marginTop: -80,
+    width: 140 * 2,
+    height: 170,
+    backgroundColor: '#252d4a',
+    borderRadius: 9,
+    paddingHorizontal: 5,
+    color: 'white',
+    fontFamily: 'Verdana',
+    fontWeight: 500,
+  },
+  ansewerSection: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginTop: 5,
+  },
+  scoreSection: {
+    fontSize: 18,
+    marginTop: 5,
+  },
+  questionSection: {
+    fontWeight: 540,
+    marginTop: 5,
+  },
+  finalScore: {
+    textAlign: 'center',
+    padding: 40,
+  },
+    countdownText: {
+    marginLeft: 5,
+    marginTop:30,
+    paddingTop:9,
+    width: 100 * 2,
+    height: 40,
+    backgroundColor: '#252d4a',
+    borderRadius: 9,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 500,
+    color: 'white',
+    fontFamily: 'Verdana',
+  },
+});

@@ -1,0 +1,338 @@
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Audio } from 'expo-av';
+import CountDown from 'react-native-countdown-component';
+import moment from 'moment';
+
+export default function App() { 
+  const [counter, setCounter] = React.useState(60);
+
+  // Third Attempts
+  React.useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
+  
+  const questions = [
+    {
+      questionText: 'Which character is not a friend of Harry Potter?',
+      answerOptions: [
+        { answerText: 'Ron Weasley', isCorrect: false },
+        { answerText: 'Ginny Weasley', isCorrect: false },
+        { answerText: 'Hermione Granger', isCorrect: false },
+        { answerText: 'Draco Malfoy', isCorrect: true },
+      ],
+    },
+    {
+      questionText:
+        'In Pirates of the Caribbean, what was Captain Jack Sparrow’s ship’s name?',
+      answerOptions: [
+        { answerText: 'The black pearl', isCorrect: true },
+        { answerText: 'Adventure Galley', isCorrect: false },
+        { answerText: 'Royal Fortune', isCorrect: false },
+        { answerText: 'Whydah', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'Excluding religious works, what is the best-selling book of all time?',
+      answerOptions: [
+        {
+          answerText: 'The Lord of the Rings by J.R.R. Tolkien',
+          isCorrect: false,
+        },
+        {
+          answerText: 'The Little Prince by Antoine de Saint-Exupery',
+          isCorrect: false,
+        },
+        { answerText: 'Don Quixote by Miguel de Cervantes', isCorrect: true },
+        {
+          answerText: 'A Tale of Two Cities by Charles Dickens',
+          isCorrect: false,
+        },
+      ],
+    },
+    {
+      questionText:
+        'James and the Giant Peach and Matilda are two well-known books by what author?',
+      answerOptions: [
+        { answerText: 'William Shakespeare', isCorrect: false },
+        { answerText: 'Roald Dahl', isCorrect: true },
+        { answerText: 'Rebecca Solnit', isCorrect: false },
+        { answerText: 'Tom Perrotta', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'What is the name of Mickey Mouse’s pet dog?',
+      answerOptions: [
+        { answerText: 'Trento', isCorrect: false },
+        { answerText: 'Popi', isCorrect: false },
+        { answerText: 'Melono', isCorrect: false },
+        { answerText: 'Pluto', isCorrect: true },
+      ],
+    },
+    {
+      questionText:
+        'Which of these films is a (loose) adaptation of Shakespeare’s Twelfth Night?',
+      answerOptions: [
+        { answerText: 'She is the man', isCorrect: true },
+        { answerText: 'She is all that', isCorrect: false },
+        { answerText: 'She is out of my league', isCorrect: false },
+        { answerText: 'She is the one', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'In The Matrix, does Neo take the blue pill or the red pill?',
+      answerOptions: [
+        { answerText: 'Green pill', isCorrect: false },
+        { answerText: 'Red pill', isCorrect: true },
+        { answerText: 'Yellow pill', isCorrect: false },
+        { answerText: 'Blue pill', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'What flavor of Pop Tarts does Buddy the Elf use in his spaghetti in Elf? ',
+      answerOptions: [
+        { answerText: 'Oreo', isCorrect: false },
+        { answerText: 'Strawberry', isCorrect: false },
+        { answerText: 'Vanilla', isCorrect: false },
+        { answerText: 'Chocolate', isCorrect: true },
+      ],
+    },
+    {
+      questionText: 'Who played park owner John Hammond in Jurassic Park?',
+      answerOptions: [
+        { answerText: 'Sam Neill', isCorrect: false },
+        { answerText: 'Jeff Goldblum', isCorrect: false },
+        { answerText: 'Richard Attenborough', isCorrect: true },
+        { answerText: 'Wayne Knight', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'Which movie was incorrectly announced as the winner of Best Picture at the 2017 Academy Awards, during the greatest Oscars flub of all time?',
+      answerOptions: [
+        { answerText: 'La la land', isCorrect: true },
+        { answerText: 'Avatar', isCorrect: false },
+        { answerText: 'Moonlight', isCorrect: false },
+        { answerText: 'Toy Story', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'In Finding Nemo, Dory suffers from what?',
+      answerOptions: [
+        { answerText: 'Autisim', isCorrect: false },
+        { answerText: 'Unable to talk', isCorrect: false },
+        { answerText: 'Short-term memory loss', isCorrect: true },
+        { answerText: 'Fast-term memory loss', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'What is the name of Princess Jasmine’s tiger in Aladdin?',
+      answerOptions: [
+        { answerText: 'Hjara', isCorrect: false },
+        { answerText: 'Rajah', isCorrect: true },
+        { answerText: 'Arah', isCorrect: false },
+        { answerText: 'Ryeha', isCorrect: true },
+      ],
+    },
+    {
+      questionText: 'What are the names of Cinderella’s stepsisters?',
+      answerOptions: [
+        { answerText: 'Harris and Hubert', isCorrect: false },
+        { answerText: 'Adella and Anala', isCorrect: false },
+        { answerText: 'Anastasia and Drizella', isCorrect: true },
+        { answerText: 'Aquata and Arista', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'What was the first Pixar movie?',
+      answerOptions: [
+        { answerText: 'Toy Story', isCorrect: true },
+        { answerText: 'Monsters Inc', isCorrect: false },
+        { answerText: 'Dumbo', isCorrect: false },
+        { answerText: 'Bambi', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'Which Disney character sings “How Far I’ll Go”?',
+      answerOptions: [
+        { answerText: 'Ariel', isCorrect: false },
+        { answerText: 'Elsa', isCorrect: false },
+        { answerText: 'Moana', isCorrect: true },
+        { answerText: 'Cinderella', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'What was the first novel ever written?',
+      answerOptions: [
+        { answerText: 'Le Morte d Arthur', isCorrect: false },
+        { answerText: 'The Tale of Genji', isCorrect: true },
+        { answerText: 'Beware the Cat', isCorrect: false },
+        { answerText: 'Euphues: The Anatomy of Wit', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'Which American classic was published in Swedish with the translated title “A Man Without Scruples” (“En Man Utan Skrupler”)?',
+      answerOptions: [
+        { answerText: 'To Kill A Mockingbird', isCorrect: false },
+        { answerText: 'Pride and Prejudice', isCorrect: false },
+        { answerText: 'The Great Gatsby', isCorrect: true },
+        { answerText: 'In Cold Blood', isCorrect: false },
+      ],
+    },
+    {
+      questionText: 'What was the name of the little boy in Jungle Book?',
+      answerOptions: [
+        { answerText: 'Mowgli', isCorrect: true },
+        { answerText: 'Monti', isCorrect: false },
+        { answerText: 'Rafael', isCorrect: false },
+        { answerText: 'Mezan', isCorrect: false },
+      ],
+    },
+    {
+      questionText:
+        'How does Lucy get to Narnia in The Lion, the Witch and the Wardrobe?',
+      answerOptions: [
+        { answerText: 'Running', isCorrect: false },
+        { answerText: 'Jumping', isCorrect: false },
+        { answerText: 'Throught a portal', isCorrect: false },
+        { answerText: 'Throught a wardrobe', isCorrect: true },
+      ],
+    },
+    {
+      questionText: 'Complete the title of the famous book by Dr. Seuss: The Cat in the...?',
+      answerOptions: [
+        { answerText: 'Face', isCorrect: false },
+        { answerText: 'Hat', isCorrect: true },
+        { answerText: 'House', isCorrect: false },
+        { answerText: 'Butt', isCorrect: false },
+      ],
+    },
+  ];
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showScore, setShowScore] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const handleAnswerOptionClick = (isCorrect) => {
+    if (isCorrect) {
+      setScore(score + 1);
+    }
+
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < questions.length) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setShowScore(true);
+    }
+  };
+
+  return (
+    <View style={styles.body}>
+      <View style={styles.body2}>
+        <div className="app">
+          {showScore ? (
+            <View style={styles.finalScore}>
+              <div className="score-section">
+                You scored {score} out of {questions.length}
+              </div>
+            </View>
+          ) : (
+            <>
+              <div className="question-section">
+                <View style={styles.scoreSection}>
+                  <div className="question-count">
+                    <span>Question {currentQuestion + 1}</span>/
+                    {questions.length}
+                  </div>
+                </View>
+                <View style={styles.questionSection}>
+                  <div className="question-text">
+                    {questions[currentQuestion].questionText}
+                  </div>
+                </View>
+              </div>
+              <View style={styles.ansewerSection}>
+                <div className="answer-section">
+                  {questions[currentQuestion].answerOptions.map(
+                    (answerOption) => (
+                      <button
+                        onClick={() =>
+                          handleAnswerOptionClick(answerOption.isCorrect)
+                        }>
+                        {answerOption.answerText}
+                      </button>
+                    )
+                  )}
+                </div>
+              </View>
+            </>
+          )}
+        </div>
+      </View>
+        <View style={styles.countdownText}>
+        <div>Countdown: {counter}</div>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  body: {
+    backgroundColor: '#7cc6fe',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 370,
+  },
+  body2: {
+    marginLeft: 5,
+    marginTop:-80,
+    width: 140 * 2,
+    height: 170,
+    backgroundColor: '#252d4a',
+    borderRadius: 9,
+    paddingHorizontal: 5,
+    color: 'white',
+    fontFamily: 'Verdana',
+    fontWeight: 500,
+  },
+  ansewerSection: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginTop: 5,
+  },
+  scoreSection: {
+    fontSize: 18,
+    marginTop: 5,
+  },
+  questionSection: {
+    fontWeight: 540,
+    marginTop: 5,
+  },
+  finalScore: {
+    textAlign: 'center',
+    padding: 40,
+  },
+    countdownText: {
+    marginLeft: 5,
+    marginTop:30,
+    paddingTop:9,
+    width: 100 * 2,
+    height: 40,
+    backgroundColor: '#252d4a',
+    borderRadius: 9,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 500,
+    color: 'white',
+    fontFamily: 'Verdana',
+  },
+});

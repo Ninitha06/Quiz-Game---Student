@@ -1,0 +1,321 @@
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Audio } from 'expo-av';
+import CountDown from 'react-native-countdown-component';
+import moment from 'moment';
+
+
+export default function App() {
+    const [counter, setCounter] = React.useState(60);
+
+  // Third Attempts
+  React.useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
+
+	const questions = [
+		{
+			questionText: 'A testable prediction about the outcome of an experimentation is called',
+			answerOptions: [
+				{ answerText: 'Hypothesis', isCorrect: false },
+				{ answerText: 'Prediction', isCorrect: false },
+				{ answerText: 'Data', isCorrect: true },
+				{ answerText: 'Conclusion', isCorrect: false },
+			],
+		},
+		{
+			questionText: 'Which variable is changed on purpose by the scientist?',
+			answerOptions: [
+				{ answerText: 'Constant/Controlled Variable', isCorrect: false },
+				{ answerText: 'Manipulated/Independent Variable', isCorrect: true },
+				{ answerText: 'Responding/Depending Variable', isCorrect: false },
+				{ answerText: 'Hypothesis', isCorrect: false },
+			],
+		},
+		{
+			questionText: 'How many wings does a mosquito have?',
+			answerOptions: [
+				{ answerText: 'Two', isCorrect: true },
+				{ answerText: 'Ten', isCorrect: false },
+				{ answerText: 'Five', isCorrect: false },
+				{ answerText: 'Seven', isCorrect: false },
+			],
+		},
+		{
+			questionText: 'Which is the largest internal organ in the human body?',
+			answerOptions: [
+				{ answerText: 'Kidneys', isCorrect: false },
+				{ answerText: 'Brain', isCorrect: false },
+				{ answerText: 'Lungs', isCorrect: false },
+				{ answerText: 'Liver', isCorrect: true },
+			],
+		},
+    {
+			questionText: 'What is the collective name for a group of crows?',
+			answerOptions: [
+				{ answerText: 'Herd', isCorrect: false },
+				{ answerText: 'Murder', isCorrect: true },
+				{ answerText: 'Army', isCorrect: false },
+				{ answerText: 'Litters', isCorrect: false },
+			],
+		},
+    {
+			questionText: 'What is the top layer of a rainforest called?',
+			answerOptions: [
+				{ answerText: 'Emergent layer', isCorrect: true },
+				{ answerText: 'Canopy layer', isCorrect: false },
+				{ answerText: 'Understory layer', isCorrect: false },
+				{ answerText: 'Forest layer', isCorrect: false },
+			],
+		},
+    {
+			questionText: 'What is the wintry-like biome called?',
+			answerOptions: [
+				{ answerText: 'Dessert', isCorrect: false },
+				{ answerText: 'Rainforest', isCorrect: false },
+				{ answerText: 'Taiga', isCorrect: false },
+				{ answerText: 'Tundra', isCorrect: true },
+			],
+		},
+    {
+			questionText: 'Which planet is the hottest?',
+			answerOptions: [
+				{ answerText: 'Mercury', isCorrect: false },
+				{ answerText: 'Earth', isCorrect: false },
+				{ answerText: 'Mars', isCorrect: true },
+				{ answerText: 'Venus', isCorrect: false },
+			],
+		},
+    {
+			questionText: 'What is the rarest blood type?',
+			answerOptions: [
+				{ answerText: 'B negative', isCorrect: false },
+				{ answerText: 'C positive', isCorrect: false },
+				{ answerText: 'AB negative', isCorrect: true },
+				{ answerText: 'D negative', isCorrect: false },
+			],
+		},
+    {
+			questionText: 'What tool is used to measure air pressure?',
+			answerOptions: [
+				{ answerText: 'Barometer', isCorrect: false },
+				{ answerText: 'Airmeter', isCorrect: false },
+				{ answerText: 'Laser measurer', isCorrect: false },
+				{ answerText: 'Angle Gauge', isCorrect: true },
+			],
+		},
+    {
+			questionText: 'What is the primary job of the heart?',
+			answerOptions: [
+				{ answerText: 'To organize the organs', isCorrect: false },
+				{ answerText: 'To create blood', isCorrect: false },
+				{ answerText: 'To pump blood throught the body', isCorrect: true },
+				{ answerText: 'To run faster', isCorrect: false },
+			],
+		},
+    {
+			questionText: 'Ascorbic acid is a form of which vitamin?',
+			answerOptions: [
+				{ answerText: 'Vitamin D', isCorrect: false },
+				{ answerText: 'Vitamin C', isCorrect: true },
+				{ answerText: 'Vitamin A', isCorrect: false },
+				{ answerText: 'Non of the above', isCorrect: false },
+			],
+		},
+    {
+			questionText: 'On the periodic table, what symbol stands for silver?',
+			answerOptions: [
+				{ answerText: 'CC1', isCorrect: false },
+				{ answerText: 'GG', isCorrect: false },
+				{ answerText: 'SV', isCorrect: false },
+				{ answerText: 'AG', isCorrect: true },
+			],
+		},
+    {
+			questionText: 'Which is the most sensitive of the senses?',
+			answerOptions: [
+				{ answerText: 'Touching', isCorrect: false },
+				{ answerText: 'Tasting', isCorrect: false },
+				{ answerText: 'Hearing', isCorrect: true },
+				{ answerText: 'Talking', isCorrect: false },
+			],
+		},
+    {
+			questionText: 'Humans and chimpanzees share roughly how much DNA?',
+			answerOptions: [
+				{ answerText: '100 percent', isCorrect: false },
+				{ answerText: '98.8 percent', isCorrect: true },
+				{ answerText: '90 percent', isCorrect: false },
+				{ answerText: '95.6 percent', isCorrect: false},
+			],
+		},
+    {
+			questionText: 'How many hearts do octopuses have?',
+			answerOptions: [
+				{ answerText: 'Three', isCorrect: true },
+				{ answerText: 'One', isCorrect: false },
+				{ answerText: 'Ten', isCorrect: false },
+				{ answerText: 'Two', isCorrect: false},
+			],
+		},
+    {
+			questionText: 'What is the largest moon of Saturn called?',
+			answerOptions: [
+				{ answerText: 'King Kong', isCorrect: false },
+				{ answerText: 'Svaten', isCorrect: false },
+				{ answerText: 'Titan', isCorrect: true },
+				{ answerText: 'Latus', isCorrect: false},
+			],
+		},
+    {
+			questionText: 'What part of a human body is the Mandible?',
+			answerOptions: [
+				{ answerText: 'Lungs', isCorrect: false },
+				{ answerText: 'Skull', isCorrect: true },
+				{ answerText: 'Theet', isCorrect: false },
+				{ answerText: 'Legs', isCorrect: false},
+			],
+		},
+    {
+			questionText: 'How many planets are in our Solar System',
+			answerOptions: [
+				{ answerText: 'Eigth', isCorrect: true },
+				{ answerText: 'One', isCorrect: false },
+				{ answerText: 'Ten', isCorrect: false },
+				{ answerText: 'Twelve', isCorrect: false},
+			],
+		},
+    {
+			questionText: 'What are chemicals that help break down food?',
+			answerOptions: [
+				{ answerText: 'Namely', isCorrect: false },
+				{ answerText: 'Chloroplast', isCorrect: false },
+				{ answerText: 'Calcium', isCorrect: false },
+				{ answerText: 'Enzymes', isCorrect: true},
+			],
+		},
+	];
+
+	const [currentQuestion, setCurrentQuestion] = useState(0);
+	const [showScore, setShowScore] = useState(false);
+	const [score, setScore] = useState(0);
+
+	const handleAnswerOptionClick = (isCorrect) => {
+		if (isCorrect) {
+			setScore(score + 1);
+		}
+
+		const nextQuestion = currentQuestion + 1;
+		if (nextQuestion < questions.length) {
+			setCurrentQuestion(nextQuestion);
+		} else {
+			setShowScore(true);
+		}
+	};
+
+  return (
+    <View style={styles.body}>
+      <View style={styles.body2}>
+        <div className="app">
+          {showScore ? (
+            <View style={styles.finalScore}>
+              <div className="score-section">
+                You scored {score} out of {questions.length}
+              </div>
+            </View>
+          ) : (
+            <>
+              <div className="question-section">
+                <View style={styles.scoreSection}>
+                  <div className="question-count">
+                    <span>Question {currentQuestion + 1}</span>/
+                    {questions.length}
+                  </div>
+                </View>
+                <View style={styles.questionSection}>
+                  <div className="question-text">
+                    {questions[currentQuestion].questionText}
+                  </div>
+                </View>
+              </div>
+              <View style={styles.ansewerSection}>
+                <div className="answer-section">
+                  {questions[currentQuestion].answerOptions.map(
+                    (answerOption) => (
+                      <button
+                        onClick={() =>
+                          handleAnswerOptionClick(answerOption.isCorrect)
+                        }>
+                        {answerOption.answerText}
+                      </button>
+                    )
+                  )}
+                </div>
+              </View>
+            </>
+          )}
+        </div>
+      </View>
+            <View style={styles.countdownText}>
+        <div>Countdown: {counter}</div>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  body: {
+    backgroundColor: '#7cc6fe',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 370,
+  },
+  body2: {
+    marginLeft: 5,
+        marginTop:-80,
+    width: 140 * 2,
+    height: 170,
+    backgroundColor: '#252d4a',
+    borderRadius: 9,
+    paddingHorizontal: 5,
+    color: 'white',
+    fontFamily: 'Verdana',
+    fontWeight: 500,
+  },
+  ansewerSection: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginTop: 5,
+  },
+  scoreSection: {
+    fontSize: 18,
+    marginTop: 5,
+  },
+  questionSection: {
+    fontWeight: 540,
+    marginTop: 5,
+  },
+  finalScore: {
+    textAlign: 'center',
+    padding: 40,
+  },
+    countdownText: {
+    marginLeft: 5,
+    marginTop:30,
+    paddingTop:9,
+    width: 100 * 2,
+    height: 40,
+    backgroundColor: '#252d4a',
+    borderRadius: 9,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 500,
+    color: 'white',
+    fontFamily: 'Verdana',
+  },
+});
